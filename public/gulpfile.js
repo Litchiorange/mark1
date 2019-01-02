@@ -6,8 +6,11 @@ var sass = require('gulp-sass');
 var cleanCss = require('gulp-clean-css');
 //压缩Js
 var uglify = require('gulp-uglify');
+//合并
+var jsconcat = require('gulp-concat');
 //服务
 var server = require('gulp-webserver');
+//操作文件
 var fs = require('fs');
 var url = require('url');
 var path = require('path');
@@ -24,6 +27,7 @@ gulp.task('sass', function() {
 gulp.task('watch', function() {
     gulp.watch('src/scss/index.scss', gulp.series('sass'));
 });
+
 //服务
 gulp.task('webserver', function() {
     return gulp.src('src')
@@ -48,5 +52,22 @@ gulp.task('webserver', function() {
         }));
 });
 
-//开发任务
-gulp.task('dev', gulp.parallel('sass', 'watch', 'webserver'));
+//默认任务
+gulp.task('default', gulp.parallel('sass', 'watch', 'webserver'));
+
+//压缩css
+gulp.task('cleancss', function() {
+    return gulp.src('src/css/index.css')
+        .pipe(cleanCss())
+        .pipe(gulp.dest('dist/css/'))
+});
+
+//压缩js
+gulp.task('uglifyjs', function() {
+    return gulp.src('src/js/index.js')
+        .pipe(uglify())
+        .pipe(gulp.dest('dist/js/'))
+});
+
+//打包任务
+gulp.task('build', gulp.parallel('cleancss', 'uglifyjs'));
