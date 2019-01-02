@@ -48,3 +48,12 @@ p {
     line-height: pxTorem(60px);
     color: gray;
 }
+
+h2 {
+    width: 100%;
+    height: pxTorem(60px);
+    text-align: center;
+    line-height: pxTorem(60px);
+    color: gray;
+    margin-top: pxTorem(100px);
+}
